@@ -6,16 +6,37 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 03:10:50 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 03:52:14 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 04:19:08 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_all(t_rules *r, int ac, char **av)
+static void	init_philos(t_rules *r)
 {
 	int	i;
 
+	i = 0;
+	while (i < r->nb_philos)
+	{
+		r->philos[i].id = i + 1;
+		r->philos[i].meals_eaten = 0;
+		r->philos[i].last_meal = r->start_ms;
+		r->philos[i].rules = r;
+		pthread_mutex_init(&r->forks[i], NULL);
+		i++;
+	}
+}
+
+static void	init_mutexes(t_rules *r)
+{
+	pthread_mutex_init(&r->print_mx, NULL);
+	pthread_mutex_init(&r->stop_mx, NULL);
+	pthread_mutex_init(&r->meal_mx, NULL);
+}
+
+int	init_all(t_rules *r, int ac, char **av)
+{
 	r->nb_philos = atoi(av[1]);
 	r->time_to_die = atol(av[2]);
 	r->time_to_eat = atol(av[3]);
@@ -30,19 +51,8 @@ int	init_all(t_rules *r, int ac, char **av)
 	r->forks = malloc(sizeof(pthread_mutex_t) * r->nb_philos);
 	if (!r->philos || !r->forks)
 		return (0);
-	i = 0;
-	while (i < r->nb_philos)
-	{
-		r->philos[i].id = i + 1;
-		r->philos[i].meals_eaten = 0;
-		r->philos[i].last_meal = r->start_ms;
-		r->philos[i].rules = r;
-		pthread_mutex_init(&r->forks[i], NULL);
-		i++;
-	}
-	pthread_mutex_init(&r->print_mx, NULL);
-	pthread_mutex_init(&r->stop_mx, NULL);
-	pthread_mutex_init(&r->meal_mx, NULL);
+	init_philos(r);
+	init_mutexes(r);
 	return (1);
 }
 
