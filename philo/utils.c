@@ -6,7 +6,7 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 02:02:16 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 03:52:57 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 19:57:08 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@ long	timestamp(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	ft_usleep(long ms)
+void	safe_usleep(t_philo *p, long duration)
 {
 	long	start;
 
 	start = timestamp();
-	while (timestamp() - start < ms)
-		usleep(100);
+	while (!finished(p->rules))
+	{
+		if (timestamp() - start >= duration)
+			break ;
+		usleep(500);
+	}
 }
 
 void	safe_print(t_rules *r, int id, char *msg)
