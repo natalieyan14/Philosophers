@@ -6,13 +6,15 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 02:16:39 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 03:50:38 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 18:28:56 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <ctype.h>
+# include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>

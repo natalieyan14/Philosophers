@@ -5,25 +5,63 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 03:39:38 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 03:53:08 by natalieyan       ###   ########.fr       */
+/*   Created: 2025/08/24 18:28:08 by natalieyan        #+#    #+#             */
+/*   Updated: 2025/08/24 18:39:50 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
+
+static int	is_valid_number(char *str)
+{
+	long	n;
+	int		i;
+
+	n = 0;
+	i = 0;
+	if (!str || str[0] == '\0')
+		return (0);
+	if (str[0] == '-')
+		return (0);
+	if (str[0] == '+')
+		i = 1;
+	while (str[i])
+	{
+		if (!isdigit(str[i]))
+			return (0);
+		n = n * 10 + (str[i] - '0');
+		if (n > INT_MAX)
+			return (0);
+		i++;
+	}
+	return (n != 0);
+}
+
+static int	validate_args(int ac, char **av)
+{
+	int	i;
+
+	i = 1;
+	if (ac != 5 && ac != 6)
+		return (printf("Error: invalid number of arguments\n"), 0);
+	while (i < ac)
+	{
+		if (!is_valid_number(av[i]))
+			return (printf("Error: invalid number '%s'\n", av[i]), 0);
+		i++;
+	}
+	return (1);
+}
 
 int	main(int ac, char **av)
 {
 	t_rules	r;
 	int		i;
 
-	if (ac != 5 && ac != 6)
-		return (printf("Error!! Invalid number of arguments.\n"));
+	if (!validate_args(ac, av))
+		return (-1);
 	if (!init_all(&r, ac, av))
-		return (printf("Error!! Initialization failed.\n"));
+		return (printf("Error!"));
 	i = 0;
 	while (i < r.nb_philos)
 	{
