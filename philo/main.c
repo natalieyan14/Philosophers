@@ -6,7 +6,7 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 18:28:08 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 23:05:35 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/26 01:24:40 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int	is_valid_number(char *str)
 		return (0);
 	if (str[0] == '+')
 		i = 1;
+	if (str[i] == '0' && str[i + 1] != '\0')
+		return (0);
 	while (str[i])
 	{
 		if (!isdigit(str[i]))

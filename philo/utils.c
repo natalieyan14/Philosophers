@@ -6,32 +6,39 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 02:02:16 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 23:44:22 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/26 01:35:12 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
-#include <unistd.h>
 
 long	timestamp(void)
 {
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 void	safe_usleep(t_philo *p, long duration)
 {
 	long	start;
+	long	elapsed;
+	long	remaining;
 
 	start = timestamp();
 	while (!finished(p->rules))
 	{
-		if (timestamp() - start >= duration)
+		elapsed = timestamp() - start;
+		remaining = duration - elapsed;
+		if (remaining <= 0)
 			break ;
-		usleep(500);
+		if (remaining > 1000)
+			usleep(1000);
+		else if (remaining > 100)
+			usleep(100);
+		else
+			usleep(50);
 	}
 }
 
