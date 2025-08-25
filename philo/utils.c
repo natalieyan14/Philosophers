@@ -6,11 +6,13 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 02:02:16 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 19:57:08 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 23:44:22 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdio.h>
+#include <unistd.h>
 
 long	timestamp(void)
 {
@@ -43,5 +45,21 @@ void	safe_print(t_rules *r, int id, char *msg)
 		t = timestamp() - r->start_ms;
 		printf("%ld %d %s\n", t, id, msg);
 	}
+	pthread_mutex_unlock(&r->print_mx);
+}
+
+void	announce_death(t_rules *r, int id)
+{
+	long	t;
+
+	pthread_mutex_lock(&r->print_mx);
+	pthread_mutex_lock(&r->stop_mx);
+	if (r->stop == 0)
+	{
+		r->stop = 1;
+		t = timestamp() - r->start_ms;
+		printf("%ld %d died\n", t, id);
+	}
+	pthread_mutex_unlock(&r->stop_mx);
 	pthread_mutex_unlock(&r->print_mx);
 }

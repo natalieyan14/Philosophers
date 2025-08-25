@@ -6,7 +6,7 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 02:16:39 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 20:03:57 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 23:33:19 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int						finished(t_rules *r);
 long					timestamp(void);
 void					safe_usleep(t_philo *p, long duration);
 void					safe_print(t_rules *r, int id, char *msg);
+void					announce_death(t_rules *r, int id);
+
+void					handle_one_philo(t_philo *p);
+void					take_even_forks(t_philo *p);
+void					take_odd_forks(t_philo *p);
 
 void					*philo_routine(void *arg);
-void					handle_one_philo(t_philo *p);
-void					take_forks(t_philo *p);
-void					release_forks(t_philo *p);
-void					eat_sleep_think(t_philo *p);
-
 void					*monitor_routine(void *arg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 03:10:50 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 19:58:38 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 23:23:44 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,14 @@ int	init_all(t_rules *r, int ac, char **av)
 	r->stop = 0;
 	r->start_ms = timestamp();
 	r->philos = malloc(sizeof(t_philo) * r->nb_philos);
-	r->forks = malloc(sizeof(pthread_mutex_t) * r->nb_philos);
-	if (!r->philos || !r->forks)
+	if (!r->philos)
 		return (0);
+	r->forks = malloc(sizeof(pthread_mutex_t) * r->nb_philos);
+	if (!r->forks)
+	{
+		free(r->philos);
+		return (0);
+	}
 	init_philos(r);
 	init_mutexes(r);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 18:28:08 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/24 18:39:50 by natalieyan       ###   ########.fr       */
+/*   Updated: 2025/08/24 23:05:35 by natalieyan       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static int	is_valid_number(char *str)
 	long	n;
 	int		i;
 
+	if (!str || !str[0])
+		return (0);
 	n = 0;
 	i = 0;
-	if (!str || str[0] == '\0')
-		return (0);
 	if (str[0] == '-')
 		return (0);
 	if (str[0] == '+')
@@ -41,9 +41,9 @@ static int	validate_args(int ac, char **av)
 {
 	int	i;
 
-	i = 1;
 	if (ac != 5 && ac != 6)
 		return (printf("Error: invalid number of arguments\n"), 0);
+	i = 1;
 	while (i < ac)
 	{
 		if (!is_valid_number(av[i]))
@@ -61,14 +61,17 @@ int	main(int ac, char **av)
 	if (!validate_args(ac, av))
 		return (-1);
 	if (!init_all(&r, ac, av))
-		return (printf("Error!"));
+		return (printf("Error: initialization failed\n"), 1);
 	i = 0;
 	while (i < r.nb_philos)
 	{
-		pthread_create(&r.philos[i].thread, NULL, philo_routine, &r.philos[i]);
+		if (pthread_create(&r.philos[i].thread, NULL, philo_routine,
+				&r.philos[i]) != 0)
+			return (printf("Error: thread creation failed\n"), 1);
 		i++;
 	}
-	pthread_create(&r.monitor_thread, NULL, monitor_routine, &r);
+	if (pthread_create(&r.monitor_thread, NULL, monitor_routine, &r) != 0)
+		return (printf("Error: monitor creation failed\n"), 1);
 	i = 0;
 	while (i < r.nb_philos)
 		pthread_join(r.philos[i++].thread, NULL);

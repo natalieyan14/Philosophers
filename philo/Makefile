@@ -1,8 +1,8 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I ./ -pthread
+CFLAGS = -Wall -Wextra -Werror 
 NAME = philo
 
-SRCS = init.c main.c routie_philo.c routie_monitor.c utils.c
+SRCS = init.c main.c routie_philo.c routie_monitor.c utils.c routie_utils.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -22,4 +22,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
