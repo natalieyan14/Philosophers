@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routie_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalieyan <natalieyan@student.42.fr>      +#+  +:+       +#+        */
+/*   By: nharutyu <nharutyu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 23:25:03 by natalieyan        #+#    #+#             */
-/*   Updated: 2025/08/26 01:25:01 by natalieyan       ###   ########.fr       */
+/*   Created: 2025/08/26 21:11:30 by nharutyu          #+#    #+#             */
+/*   Updated: 2025/08/26 21:11:33 by nharutyu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
